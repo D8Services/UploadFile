@@ -19,6 +19,14 @@
 	#
 	###############################################################
 	#
+# https://github.com/D8Services/UploadFile
+# This script requires parameters provided from Jamf
+# 4 - Api Username
+# 5 - Api Password
+# 6 - Path to the File (log file etc)
+# The script will then check if there is in fact a file there, followed by the size of the file
+# If large, the script will try to compress the file and throw a worning, otherwise it simply compresses
+# it and uploads it to the Computer Record.
 
 
 ## Function Decrypt Strings
@@ -26,8 +34,6 @@ function DecryptString() {
 	# Usage: ~$ DecryptString "Encrypted String" "Salt" "Passphrase"
 echo "${1}" | /usr/bin/openssl enc -aes256 -d -a -A -S "${2}" -k "${3}"
 }
-# api user - U2FsdGVkX1/SeCJbLPB9Gf/M8T1WG9fItYOtKpZ8I9g=
-# apipass - U2FsdGVkX191sVmPfdIf6kcPVfMg7ZkktQJNgfHohps=
 apiUser=$(DecryptString "${4}" "d278225b2cf07d19" "30aa6c4b854a14f00414c644")
 apiPass=$(DecryptString "${5}" "75b1598f7dd21fea" "b86a6f04239c59b4f4cead0a")
 LogFile="${6}"
@@ -75,16 +81,3 @@ fi
 #Cleaning Up
 rm -rf "${tempdir}"
 exit 0
-
-#
-#	for i in `ls ${LogFile}*.tar.gz`;do
-#		curl -sku ${apiUser}:${apiPass} ${jssURL}JSSResource/fileuploads/computers/id/${id} -X POST -F name=@"${i}"
-#		#rm "${i}"
-#		echo "Status is $?"
-#		if [[ $? == "0" ]];then
-#			echo "Delete the File"
-#		fi
-#	done
-#else
-#	echo "ERROR: File Mismatch on the path specified."
-#fi

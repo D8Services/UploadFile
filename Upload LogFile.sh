@@ -25,8 +25,8 @@
 # 5 - Api Password
 # 6 - Path to the File (log file etc)
 # The script will then check if there is in fact a file there, followed by the size of the file
-# If large, the script will try to compress the file and throw a worning, otherwise it simply compresses
-# it and uploads it to the Computer Record.
+# If large, the script will try to compress the file and throw a warning, otherwise it simply compresses
+# it and uploads it to the Computer Record in Jamf.
 
 
 ## Function Decrypt Strings
